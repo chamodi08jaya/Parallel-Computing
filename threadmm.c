@@ -9,13 +9,13 @@
 #include <assert.h>
 
 #define RANDLIMIT	5	/* Magnitude limit of generated randno.*/
-#define N		2000 	/* Matrix Size is configurable -
+#define N		1000 	/* Matrix Size is configurable -
 				   Should be a multiple of THREADS */
-#define THREADS		8	/* Define Number of Threads */
+#define THREADS		4	/* Define Number of Threads */
 #define NUMLIMIT 	70.0
 
 #ifdef BLOCKED
-#define NB 100 /*No. of blocks across matrix and also down matrix in one dimension*/
+#define NB 50 /*No. of blocks across matrix and also down matrix in one dimension*/
 #define NEIB N/NB /*No. of elements in a direction*/
 #define BLOCKSIZE NEIB*NEIB /*No. of elements in a block*/
 #endif
@@ -50,8 +50,9 @@ void *slave( void *myid )
 	Therefore the data integrity issue is not involved.*/
 
 		/*Add a blocked to the thread*/
-		assert(N%NB==0);
+			
 			#ifdef BLOCKED
+			assert(N%NB==0);
 			for (p=0; p<NB; p++){
 				for (q=0; q<NB; q++) {
 				  for (r=0; r<NB; r++) {
