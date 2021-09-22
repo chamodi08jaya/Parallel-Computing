@@ -26,7 +26,7 @@ int main (int argc, char *argv[]) {
   struct timeval start, stop;
   long i,j,k;
   int id, chunk;
-  
+
   #ifdef BLOCKED
 	  int p,q,r;
   #endif
@@ -57,12 +57,13 @@ int main (int argc, char *argv[]) {
 
   /*Start Timing*/
   gettimeofday(&start, 0);
-  
+
   chunk = CHUNKSIZE;
-  
+
   /*Add a blocked to the openMP*/
   #ifdef BLOCKED
 	  assert(N%NB==0);
+	  #pragma omp parallel for shared(a,b,c,chunk) private(i,j,k,id) schedule(static,chunk)
 	  for (p=0; p<NB; p++){
 		for (q=0; q<NB; q++) {
 		  for (r=0; r<NB; r++) {
